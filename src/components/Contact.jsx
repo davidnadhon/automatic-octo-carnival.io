@@ -64,7 +64,8 @@ export default function Contact() {
       return
     }
     setIsSubmitting(true)
-    // Simulate async submission
+    // TODO: Replace with actual backend API call (e.g., POST /api/contact)
+    // Simulate async submission for demonstration purposes
     setTimeout(() => {
       setIsSubmitting(false)
       setSubmitted(true)
