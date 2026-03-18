@@ -56,21 +56,34 @@ export default function Contact() {
     }
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     const validationErrors = validate(form)
     if (hasErrors(validationErrors)) {
       setErrors(validationErrors)
       return
     }
+
     setIsSubmitting(true)
-    // TODO: Replace with actual backend API call (e.g., POST /api/contact)
-    // Simulate async submission for demonstration purposes
-    setTimeout(() => {
+
+    try {
+      const response = await fetch("https://formspree.io/f/xeervqvq", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      })
+
+      if (response.ok) {
+        setSubmitted(true)
+        setForm(initialFormState)
+      } else {
+        alert("Erreur lors de l'envoi. Veuillez réessayer.")
+      }
+    } catch (error) {
+      alert("Erreur réseau. Vérifiez votre connexion.")
+    } finally {
       setIsSubmitting(false)
-      setSubmitted(true)
-      setForm(initialFormState)
-    }, 1500)
+    }
   }
 
   if (submitted) {
